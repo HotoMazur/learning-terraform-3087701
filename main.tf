@@ -53,7 +53,10 @@ module "alb" {
     blog-http = {
       port            = 80
       protocol        = "HTTP"
-      target_groups_index = 0
+      default_action = {
+        type = "forward"
+        target_group_key = "blog-instance"
+      }
     }
   }
 
