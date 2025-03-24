@@ -51,10 +51,9 @@ module "alb" {
 
   listeners = {
     blog-http = {
-      port            = 80
-      protocol        = "HTTP"
-      default_action = {
-        type = "forward"
+      port     = 80
+      protocol = "HTTP"
+      forward = {
         target_group_key = "blog-instance"
       }
     }
@@ -66,7 +65,12 @@ module "alb" {
       protocol         = "HTTP"
       port             = 80
       target_type      = "instance"
-      target_id        = aws_instance.blog.id
+      targets = {
+        blog_instance = {
+          target_id = aws_instance.blog.id
+          port      = 80
+        }
+      }
     }
   }
 
